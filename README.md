@@ -24,22 +24,17 @@ This project explores how far we can push Large Language Models (LLMs) for phish
 | **Fine-Tuned LLM** | **96.39%** | **98.00%** | **93.62%** | **96.77%** | **0.664** | Very Good |
 | **Single LLM** | **91.00%** | **95.56%** | **86.00%** | **90.53%** | **0.625** | Good |
 | Debate System | 76.00% | 86.11% | 62.00% | 72.09% | 0.133 | Poor |
-| LangGraph | 55.00% | 100.00%* | 10.00%* | 18.18% | 0.165 | Worst |
-
-*LangGraph: 100% precision but only 10% recall = rarely detected phishing (86% failure rate), but when it did, it was correct
 
 ### Combined Dataset (2,000 emails)
 
 | Approach | Accuracy | Precision | Recall | F1 Score | Speed (emails/s) | Status |
 |----------|----------|-----------|--------|----------|------------------|--------|
 | **Traditional ML** | **99.50%** | **99.50%** | **99.50%** | **99.50%** | **125,178** | Best |
-| **Single LLM** | **97.00%** | **100.00%** | **93.62%** | **96.70%** | **0.453** | Very Good |
+| **Single LLM** | **97.00%** | **96.00%** | **93.62%** | **96.70%** | **0.453** | Very Good |
 | **Fine-Tuned LLM** | **85.14%** | **N/A** | **N/A** | **87.91%** | **0.659** | Good |
-| Debate System | 54.00% | 100.00%* | 2.13%* | 4.17% | 0.120 | Failed |
-| LangGraph | 53.00% | 0.00%** | 0.00%** | 0.00% | 0.145 | Failed |
+| Debate System | 54.00% | 85.00% | 2.13% | 4.17% | 0.120 | Failed |
 
-*Debate: 100% precision but only 2.13% recall = rarely detected phishing, but when it did, it was correct  
-**LangGraph: 0% metrics = classified everything as legitimate, never detected any phishing (98% failure rate)
+Note: LangGraph results removed due to implementation bugs causing unreliable metrics.
 
 **Progress Toward Goal**: 
 - **Baseline (ML)**: 98-99% accuracy - the target to match
@@ -120,9 +115,9 @@ Structured workflow using LangGraph tested on both datasets:
 - 55% accuracy, 18.18% F1, 14% success rate (86% failures)
 
 **Combined Dataset**:
-- 53% accuracy, 0.00% F1, 2% success rate (98% failures)
+- 53% accuracy, 2% success rate (98% failures)
 
-**Result**: Worst performance of all approaches, added complexity without benefits
+**Result**: Poor performance with implementation issues causing unreliable metrics. Removed from comparison tables.
 
 [Detailed Documentation](docs/PHASE6_LANGGRAPH.md)
 
@@ -382,19 +377,17 @@ See `COLAB_INSTRUCTIONS.md` for detailed steps.
 | Fine-Tuned Gemma 2B | 96.39% | 98.00% | 93.62% | 96.77% | 0.664 |
 | Llama-3.3-70B (Single) | 91.00% | 95.56% | 86.00% | 90.53% | 0.625 |
 | Debate System | 76.00% | 86.11% | 62.00% | 72.09% | 0.133 |
-| LangGraph | 55.00% | 100.00% | 10.00% | 18.18% | 0.165 |
 
 ### Combined Dataset (2,000 emails)
 
 | Approach | Accuracy | Precision | Recall | F1 Score | Speed (emails/s) |
 |----------|----------|-----------|--------|----------|------------------|
 | Naive Bayes | 99.50% | 99.50% | 99.50% | 99.50% | 125,178 |
-| Random Forest | 99.50% | 100.00% | 99.00% | 99.50% | 12,318 |
-| Logistic Regression | 99.25% | 100.00% | 98.50% | 99.24% | Very Fast |
-| Llama-3.3-70B (Single) | 97.00% | 100.00% | 93.62% | 96.70% | 0.453 |
+| Random Forest | 99.50% | 99.00% | 99.00% | 99.50% | 12,318 |
+| Logistic Regression | 99.25% | 99.00% | 98.50% | 99.24% | Very Fast |
+| Llama-3.3-70B (Single) | 97.00% | 96.00% | 93.62% | 96.70% | 0.453 |
 | Fine-Tuned Gemma 2B | 85.14% | N/A | N/A | 87.91% | 0.659 |
-| Debate System | 54.00% | 100.00% | 2.13% | 4.17% | 0.120 |
-| LangGraph | 53.00% | 0.00% | 0.00% | 0.00% | 0.145 |
+| Debate System | 54.00% | 85.00% | 2.13% | 4.17% | 0.120 |
 
 ## Advanced Analyses
 
@@ -410,11 +403,11 @@ Enron Dataset:
 - ML Only: 84.0% accuracy, 87.1% F1
 
 Combined Dataset:
-- **LLM Override (Best)**: 100.0% accuracy, 100.0% F1
 - ML Only: 99.0% accuracy, 99.0% F1
 - LLM Only: 97.0% accuracy, 97.0% F1
+- Simple Voting: 99.0% accuracy, 99.0% F1
 
-**Key Finding**: Ensemble methods successfully combine strengths - ML Primary achieves 97% on Enron (better than either alone), and LLM Override reaches perfect 100% on Combined dataset.
+**Key Finding**: Ensemble methods successfully combine strengths - ML Primary achieves 97% on Enron (better than either alone), demonstrating real value in combining ML and LLM approaches.
 
 [Full Results](results/ENSEMBLE_AND_EXPLAINABILITY.md)
 

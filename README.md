@@ -34,7 +34,7 @@ This project explores how far we can push Large Language Models (LLMs) for phish
 | **Fine-Tuned LLM** | **85.14%** | **N/A** | **N/A** | **87.91%** | **0.659** | Good |
 | Debate System | 54.00% | 85.00% | 2.13% | 4.17% | 0.120 | Failed |
 
-Note: LangGraph results removed due to implementation bugs causing unreliable metrics.
+
 
 **Progress Toward Goal**: 
 - **Baseline (ML)**: 98-99% accuracy - the target to match
@@ -108,17 +108,6 @@ Three-agent system (Attacker, Defender, Judge) tested on both datasets:
 
 [Detailed Documentation](docs/MULTI_AGENT_DEBATE.md)
 
-### Graph-Based Systems (LangGraph)
-Structured workflow using LangGraph tested on both datasets:
-
-**Enron Dataset**:
-- 55% accuracy, 18.18% F1, 14% success rate (86% failures)
-
-**Combined Dataset**:
-- 53% accuracy, 2% success rate (98% failures)
-
-**Result**: Poor performance with implementation issues causing unreliable metrics. Removed from comparison tables.
-
 ### Fine-Tuning
 
 Fine-tuned Gemma 2B model with LoRA on phishing detection task:
@@ -175,16 +164,124 @@ phishing-detection-project/
 │   ├── chain_of_thought_prompting.py
 │   ├── llm_ensemble.py
 │   ├── debate_system.py
-│   ├── langgraph_system.py
-│   ├── finetune_colab.ipynb      # Fine-tuning notebook
-│   └── README.md                 # Notebooks guide
+│   └── finetune_colab.ipynb      # Fine-tuning notebook
 ├── results/                       # Evaluation results
+│   ├── TRADITIONAL_ML_RESULTS.md
+│   ├── SINGLE_LLM_RESULTS.md
+│   ├── MULTI_AGENT_DEBATE_RESULTS.md
+│   ├── ENSEMBLE_AND_EXPLAINABILITY.md
+│   ├── traditional_ml_results.json
+│   ├── single_llm_results.json
+│   ├── multi_agent_debate_results.json
+│   ├── ensemble_results.json
 │   ├── enron_preprocessed_3k.csv
 │   ├── combined_preprocessed_2k.csv
-│   └── README.md
+│   ├── legit_preprocessed_1.5k.csv
+│   └── phishing_preprocessed_1.5k.csv
 ├── README.md                      # This file
 └── requirements.txt               # Dependencies
 ```
+
+## Notebooks Guide
+
+### Data Preprocessing Scripts
+- `preprocess_enron.py` - Clean and prepare Enron dataset
+- `preprocess_legit.py` - Clean and prepare legitimate emails dataset
+- `preprocess_phishing.py` - Clean and prepare phishing emails dataset
+- `create_combined_dataset.py` - Merge legit + phishing into combined dataset
+
+### Running Preprocessing
+```bash
+cd notebooks
+python preprocess_enron.py
+python preprocess_legit.py
+python preprocess_phishing.py
+python create_combined_dataset.py
+```
+
+### Evaluation Scripts
+
+**Traditional ML**:
+- `traditional_ml_baseline.py` - Test Logistic Regression, Naive Bayes, Random Forest (98-99% accuracy)
+
+**Single LLM Approaches**:
+- `single_llm_groq.py` - Zero-shot classification with Groq API (91-97% accuracy)
+- `few_shot_prompting.py` - Provide 4 examples in prompt (94.37% accuracy on Enron)
+- `chain_of_thought_prompting.py` - Ask for step-by-step reasoning
+- `llm_ensemble.py` - Multiple models voting
+
+**Multi-Agent Systems**:
+- `debate_system.py` - Three agents: Attacker, Defender, Judge (76% accuracy, underperformed single LLM)
+
+**Fine-Tuning**:
+- `finetune_colab.ipynb` - Google Colab notebook for fine-tuning (requires T4 GPU, 15-30 minutes)
+
+### Running Evaluations
+```bash
+cd notebooks
+
+# Traditional ML baseline
+python traditional_ml_baseline.py
+
+# Single LLM (requires Groq API key)
+export GROQ_API_KEY="your-api-key-here"
+python single_llm_groq.py
+
+# Few-shot prompting (best LLM result)
+python few_shot_prompting.py
+
+# Other approaches
+python chain_of_thought_prompting.py
+python llm_ensemble.py
+python debate_system.py
+```
+
+## Results Files
+
+All evaluation results are stored in the `results/` directory:
+
+### Result Documents
+- **TRADITIONAL_ML_RESULTS.md** - Logistic Regression, Naive Bayes, Random Forest (98-99.5% accuracy)
+- **SINGLE_LLM_RESULTS.md** - Llama-3.1-8B, Llama-3.3-70B zero-shot and few-shot (91-97% accuracy)
+- **MULTI_AGENT_DEBATE_RESULTS.md** - 3-agent debate system (76% Enron, 54% Combined)
+- **ENSEMBLE_AND_EXPLAINABILITY.md** - ML+LLM ensemble methods and SHAP/LIME analysis (97-99% accuracy)
+
+### Result Data Files
+- `traditional_ml_results.json` - ML model metrics
+- `single_llm_results.json` - LLM evaluation metrics
+- `multi_agent_debate_results.json` - Debate system metrics
+- `ensemble_results.json` - Ensemble method metrics
+- `explainability/explainability_results.json` - SHAP and LIME analysis
+
+### Preprocessed Datasets
+- `enron_preprocessed_3k.csv` - 3,000 Enron emails (balanced)
+- `combined_preprocessed_2k.csv` - 2,000 combined emails (balanced)
+- `legit_preprocessed_1.5k.csv` - 1,500 legitimate emails
+- `phishing_preprocessed_1.5k.csv` - 1,500 phishing emails
+
+### Performance Rankings
+
+**Enron Dataset (3,000 emails)**:
+1. Traditional ML: 98.00% accuracy, 601,765 emails/s
+2. Fine-Tuned LLM: 96.39% accuracy, 0.664 emails/s
+3. Ensemble (ML Primary): 97.00% accuracy, 0.133 emails/s
+4. Single LLM (Few-Shot): 94.37% accuracy, 0.580 emails/s
+5. Single LLM (Zero-Shot): 91.00% accuracy, 0.625 emails/s
+6. Multi-Agent Debate: 76.00% accuracy, 0.133 emails/s
+
+**Combined Dataset (2,000 emails)**:
+1. Traditional ML: 99.50% accuracy, 125,178 emails/s
+2. Ensemble (ML Only): 99.00% accuracy, 0.120 emails/s
+3. Single LLM: 97.00% accuracy, 0.453 emails/s
+4. Fine-Tuned LLM: 85.14% accuracy, 0.659 emails/s
+5. Multi-Agent Debate: 54.00% accuracy (failed)
+
+### Key Insights from Results
+- **Traditional ML** is best for production: 98-99.5% accuracy, extremely fast
+- **Fine-Tuned LLM** closes gap to 1.61% on Enron (96.39% vs 98%)
+- **Ensemble methods** combine strengths: ML Primary achieves 97% on Enron
+- **Multi-agent debate** underperforms: complexity hurts performance (54-76%)
+- **Model decisions are interpretable**: SHAP/LIME show logical feature importance
 
 ## Key Findings
 
@@ -288,7 +385,7 @@ phishing-detection-project/
 
 - **Languages**: Python 3.12
 - **ML Libraries**: scikit-learn, pandas, numpy
-- **LLM Frameworks**: Transformers, Unsloth, LangChain, LangGraph
+- **LLM Frameworks**: Transformers, Unsloth, LangChain
 - **APIs**: Groq (fast LLM inference), Ollama (local inference)
 - **Fine-tuning**: Unsloth with LoRA
 - **Platforms**: Local (Windows), Kaggle (GPU training)
@@ -308,7 +405,6 @@ groq>=0.4.0
 
 # Agent Frameworks
 langchain>=0.1.0
-langgraph>=0.0.20
 
 # Fine-tuning
 unsloth>=2024.1.0

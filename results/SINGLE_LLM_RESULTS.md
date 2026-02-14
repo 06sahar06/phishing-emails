@@ -92,7 +92,7 @@ Individual LLMs tested on phishing detection using zero-shot classification via 
 ### Enron Dataset
 | Approach | Accuracy | F1 Score | Speed | Winner |
 |----------|----------|----------|-------|--------|
-| Traditional ML (Logistic Regression) | 98.00% | 98.03% | 601,765 emails/s | ✅ ML |
+| Traditional ML (Logistic Regression) | 98.00% | 98.03% | 601,765 emails/s | ML |
 | Single LLM (Llama-3.3-70B Zero-Shot) | 91.00% | 90.53% | 0.625 emails/s | |
 | Single LLM (Llama-3.3-70B Few-Shot) | 94.37% | N/A | 0.580 emails/s | |
 
@@ -101,7 +101,7 @@ Individual LLMs tested on phishing detection using zero-shot classification via 
 ### Combined Dataset
 | Approach | Accuracy | F1 Score | Speed | Winner |
 |----------|----------|----------|-------|--------|
-| Traditional ML (Naive Bayes) | 99.50% | 99.50% | 125,178 emails/s | ✅ ML |
+| Traditional ML (Naive Bayes) | 99.50% | 99.50% | 125,178 emails/s | ML |
 | Single LLM (Llama-3.3-70B) | 97.00% | 96.70% | 0.453 emails/s | |
 
 **Gap**: ML leads by 2.5% on Combined

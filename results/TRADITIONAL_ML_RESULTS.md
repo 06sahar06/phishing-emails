@@ -83,22 +83,22 @@ Classical machine learning models tested on phishing detection using TF-IDF vect
 ### Model Characteristics
 
 **Logistic Regression**:
-- ✅ Best overall performance on Enron
-- ✅ Extremely fast
-- ✅ Interpretable coefficients
-- ✅ Good for production
+- Best overall performance on Enron
+- Extremely fast
+- Interpretable coefficients
+- Good for production
 
 **Naive Bayes**:
-- ✅ Best on Combined dataset
-- ✅ Fastest training
-- ✅ Works well with text
-- ✅ Simple and reliable
+- Best on Combined dataset
+- Fastest training
+- Works well with text
+- Simple and reliable
 
 **Random Forest**:
-- ✅ Tied best on Combined
-- ✅ Robust to overfitting
-- ✅ Good feature importance
-- ⚠️ Slower than others
+- Tied best on Combined
+- Robust to overfitting
+- Good feature importance
+- Slower than others
 
 ---
 

@@ -56,14 +56,14 @@ Three-agent debate system where multiple LLMs collaborate to classify emails thr
 ## Analysis
 
 ### What Worked (Enron)
-✅ Improved prompts increased accuracy from 69% to 76%
-✅ Better parsing improved success rate from 58% to 62%
-✅ Faster processing (7.5s vs 10.4s per email)
-✅ Higher precision (86%) - fewer false positives
+- Improved prompts increased accuracy from 69% to 76%
+- Better parsing improved success rate from 58% to 62%
+- Faster processing (7.5s vs 10.4s per email)
+- Higher precision (86%) - fewer false positives
 
 ### What Didn't Work (Combined)
-❌ 98-99% failure rate on Combined dataset
-❌ Likely causes:
+- 98-99% failure rate on Combined dataset
+- Likely causes:
   - Longer, more technical emails (3-4x longer)
   - API timeouts or rate limits
   - Complex content confusing agents
@@ -99,9 +99,9 @@ Three-agent debate system where multiple LLMs collaborate to classify emails thr
 
 | Approach | Accuracy | F1 Score | Speed (emails/s) | Ranking |
 |----------|----------|----------|------------------|---------|
-| Traditional ML | 98.00% | 98.03% | 601,765 | 🥇 1st |
-| Single LLM | 91.00% | 90.53% | 0.625 | 🥈 2nd |
-| Debate System | 76.00% | 72.09% | 0.133 | 🥉 3rd |
+| Traditional ML | 98.00% | 98.03% | 601,765 | 1st |
+| Single LLM | 91.00% | 90.53% | 0.625 | 2nd |
+| Debate System | 76.00% | 72.09% | 0.133 | 3rd |
 
 **Gap**: Debate is 15% worse than single LLM, 22% worse than ML
 
@@ -109,9 +109,9 @@ Three-agent debate system where multiple LLMs collaborate to classify emails thr
 
 | Approach | Accuracy | F1 Score | Speed (emails/s) | Ranking |
 |----------|----------|----------|------------------|---------|
-| Traditional ML | 99.50% | 99.50% | 125,178 | 🥇 1st |
-| Single LLM | 97.00% | 96.70% | 0.453 | 🥈 2nd |
-| Debate System | 54.00% | 4.17% | 0.120 | ❌ Failed |
+| Traditional ML | 99.50% | 99.50% | 125,178 | 1st |
+| Single LLM | 97.00% | 96.70% | 0.453 | 2nd |
+| Debate System | 54.00% | 4.17% | 0.120 | Failed |
 
 **Gap**: Debate failed completely (98% failure rate)
 
@@ -149,17 +149,17 @@ Three-agent debate system where multiple LLMs collaborate to classify emails thr
 ## When Debate Systems Might Work
 
 Debate systems could be valuable for:
-- ✅ Complex reasoning requiring multiple perspectives
-- ✅ Tasks where consensus improves accuracy
-- ✅ When you can afford 5x slower processing
-- ✅ With better error handling and retry logic
-- ✅ Using structured output formats (JSON)
+- Complex reasoning requiring multiple perspectives
+- Tasks where consensus improves accuracy
+- When you can afford 5x slower processing
+- With better error handling and retry logic
+- Using structured output formats (JSON)
 
 But NOT for:
-- ❌ Pattern matching tasks (like phishing detection)
-- ❌ High-volume processing
-- ❌ Production systems requiring reliability
-- ❌ When simpler approaches work better
+- Pattern matching tasks (like phishing detection)
+- High-volume processing
+- Production systems requiring reliability
+- When simpler approaches work better
 
 ---
 
